@@ -50,6 +50,8 @@ export class LoginService {
 	headers.append('Accept', 'application/json');
 	headers.append('Content-Type', 'application/json');
 
+	console.log(this.http);
+
 	return this.http.post(
 	    Config.apiUrl + "auth/sign_in",
 	    JSON.stringify({
@@ -79,7 +81,7 @@ export class LoginService {
     public handleErrors(error: Response) {
 	Config.user.loggedIn = false;
 
-        console.log(JSON.stringify(error.json()));
+        console.log(JSON.stringify(error.json(), null, 2));
         return Observable.throw(error);
     }
 
