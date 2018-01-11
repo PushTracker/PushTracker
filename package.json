@@ -4,7 +4,10 @@
   "readme": "NativeScript Application",
   "repository": "<fill-your-repository-here>",
   "nativescript": {
-    "id": "org.nativescript.PushTracker"
+    "id": "org.nativescript.PushTracker",
+    "tns-ios": {
+      "version": "3.4.1"
+    }
   },
   "scripts": {
     "lint": "tslint \"app/**/*.ts\""
