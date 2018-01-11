@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 
-import { Router } from "@angular/router";
+import { RouterExtensions } from "nativescript-angular/router";
 import { Page } from "ui/page";
 import { Color } from "color";
 import { View } from "ui/core/view";
@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
     // private members
 
     // functions
-    constructor(private router: Router, private loginService: LoginService, private page: Page) {
+    constructor(private routerExtensions: RouterExtensions, private loginService: LoginService, private page: Page) {
 	this.user = new User();
     }
 
@@ -46,7 +46,13 @@ export class LoginComponent implements OnInit {
     }
 
     public enterApp(): void {
-	this.router.navigate(["/dashboard"]);
+	this.routerExtensions.navigate(
+	    ["/dashboard"], {
+	    transition: {
+		name: "fade"
+	    },
+	    clearHistory: true
+	    });
     }
 
     public cancel(): void {
