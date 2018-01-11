@@ -1,0 +1,33 @@
+// Custom common variables
+@import '../app-variables';
+
+.action-item {
+    color: white;
+    font-size: 18;
+    text-transform: none;
+}
+
+.settings-item {
+    vertical-align: center;
+    text-overflow: none;
+    word-wrap: normal;
+    color: black;
+    font-weight: bold;
+    margin: 15;
+}
+
+.settings-slider-label {
+    color: black;
+    font-weight: bold;
+}
+
+.settings-slider {
+    margin: 5;
+}
+
+.debug-label {
+    border-bottom-width: 2;
+    border-bottom-color: gray;
+    margin: 20;
+    font-weight: bold;
+}

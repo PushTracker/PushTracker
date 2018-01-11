@@ -1,24 +1,24 @@
 import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
 import { NativeScriptCommonModule } from "nativescript-angular/common";
 
-import { NativeScriptFormsModule } from "nativescript-angular/forms";
-
 import { SharedModule } from "../shared/shared.module";
-import { SettingsRoutingModule } from "./settings-routing.module";
-import { SettingsComponent } from "./settings.component";
+import { DashboardRoutingModule } from "./dashboard-routing.module";
+import { DashboardComponent } from "./dashboard.component";
+
+import { NativeScriptUIChartModule } from "nativescript-pro-ui/chart/angular";
 
 @NgModule({
     imports: [
         NativeScriptCommonModule,
-        SettingsRoutingModule,
-	NativeScriptFormsModule,
+        NativeScriptUIChartModule,
+        DashboardRoutingModule,
         SharedModule
     ],
     declarations: [
-        SettingsComponent
+        DashboardComponent
     ],
     schemas: [
         NO_ERRORS_SCHEMA
     ]
 })
-export class SettingsModule { }
+export class DashboardModule { }

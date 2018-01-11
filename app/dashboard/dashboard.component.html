@@ -1,0 +1,220 @@
+<ActionBar class="action-bar">
+  <!-- 
+       Use the NavigationButton as a side-drawer button in Android because ActionItems are shown on the right side of the ActionBar
+    -->
+  <NavigationButton ios:visibility="collapsed" icon="res://menu" (tap)="onDrawerButtonTap()"></NavigationButton>
+  <!-- 
+       Use the ActionItem for IOS with position set to left. Using the NavigationButton as a side-drawer button in iOS is not possible, because its function is to always navigate back in the application.
+    -->
+  <ActionItem icon="res://navigation/menu" android:visibility="collapsed" (tap)="onDrawerButtonTap()"
+              ios.position="left">
+  </ActionItem>
+
+  <ActionItem text="Init"  (tap)="onDashboardInitTap()" ios.position="popup" android.position="popup">
+  </ActionItem>
+
+  <ActionItem text="Clear" (tap)="onDashboardClearTap()" ios.position="popup" android.position="popup">
+  </ActionItem>
+
+  <Label class="action-bar-title" text="Dashboard"></Label>
+</ActionBar>
+
+<!--
+    RadSideDrawer is a UI component part of the Progress NativeScript UI set of components.
+    Learn more about the RadSideDrawer UI component and how it can be customized in this documentation article:
+    http://docs.telerik.com/devtools/nativescript-ui/Controls/Angular/SideDrawer/getting-started
+    The RadSideDrawer component is designed to be used as a root element and
+    it shouldn't have any other siblings other than the <ActionBar> component.
+  -->
+<RadSideDrawer #drawer showOverNavigation="true" [drawerTransition]="sideDrawerTransition">
+  <!--
+      Use the tkDrawerContent directive to display the content of the app drawer on this page.
+    -->
+  <StackLayout tkDrawerContent>
+    <MyDrawer [selectedPage]="'Dashboard'"></MyDrawer>
+  </StackLayout>
+  
+  <!--
+      Use the tkMainContent directive to display the content of the page when you have an app drawer.
+    -->
+  <GridLayout class="page page-content" rows="*, auto" columns="*" tkMainContent>      
+    <Carousel row="0" indicatorOffset="0,70" indicatorColor="#66ccff" indicatorColorUnselected="#cceeff">
+      <CarouselItem>
+        <Label text="Pushes" class="daily-info-label"></Label>
+        <RadCartesianChart
+	  #pushesChart
+	  visible="false"
+	  (pointSelected)="selectPoint($event)"
+	  (pointDeselected)="unselectPoint($event)"
+	  seriesSelectionMode="Single"
+	  class="dashboard-chart">
+	  <!--
+	  <Trackball tkCartesianTrackball
+		     (trackBallContentRequested)="trackBallContentRequested($event)"
+		     showIntersectionPoints="true"
+		     snapMode="ClosestPoint"></Trackball>
+	  -->
+	  <AreaSeries #pushesWithSeries
+		     seriesName="Pushes With"
+		     selectionMode="DataPoint"
+		     legendTitle="Pushes With"
+		     legendLabel="Series Type"
+		     stackMode="stack"
+		     tkCartesianSeries [items]="historicalData"
+		     categoryProperty="date"
+		     valueProperty="pushesWith"></AreaSeries>
+	  <AreaSeries #pushesWithoutSeries
+		     seriesName="Pushes Without"
+		     selectionMode="DataPoint"
+		     legendTitle="Pushes Without"
+		     legendLabel="Series Type"
+		     stackMode="stack"
+		     tkCartesianSeries [items]="historicalData"
+		     categoryProperty="date"
+		     valueProperty="pushesWithout"></AreaSeries>
+	  <DateTimeContinuousAxis #pushesXAxis
+				  tkCartesianHorizontalAxis
+				  allowZoom="false"
+				  allowPan="false"
+				  plotMode="BetweenTicks"></DateTimeContinuousAxis>
+	  <LinearAxis tkCartesianVerticalAxis
+		      id="pushesVAxis"
+		      android:labelFormat="%.0f"></LinearAxis>
+	  <ChartGridLineAnnotation tkCartesianAnnotations
+				   axisId="pushesVAxis"
+				   [hidden]="average.pushesWith == 0"
+				   [value]="average.pushesWith"
+				   zPosition="AboveSeries"
+				   strokeWidth="1"
+				   strokeColor="#EB916580"></ChartGridLineAnnotation>
+	  <RadLegendView tkCartesianLegend
+			 height="75"
+			 enableSelection="true"
+			 position="Top"
+			 title="Series Type"></RadLegendView>
+        </RadCartesianChart>
+      </CarouselItem>
+      <CarouselItem>
+        <Label text="Coast" class="daily-info-label"></Label>
+        <RadCartesianChart
+	  #coastChart
+	  (pointSelected)="selectPoint($event)"
+	  (pointDeselected)="unselectPoint($event)"
+	  seriesSelectionMode="Single"
+	  class="dashboard-chart">
+	  <!--
+	  <Trackball tkCartesianTrackball
+		     (trackBallContentRequested)="trackBallContentRequested($event)"
+		     showIntersectionPoints="true"
+		     snapMode="ClosestPoint"></Trackball>
+	  -->
+	  <AreaSeries #coastWithSeries
+		     seriesName="Coast With"
+		     selectionMode="DataPoint"
+		     legendTitle="Coast With"
+		     legendLabel="Series Type"
+		     tkCartesianSeries [items]="historicalData"
+		     categoryProperty="date"
+		     valueProperty="coastWith"></AreaSeries>
+	  <AreaSeries #coastWithoutSeries
+		     seriesName="Coast Without"
+		     selectionMode="DataPoint"
+		     legendTitle="Coast Without"
+		     legendLabel="Series Type"
+		     tkCartesianSeries [items]="historicalData"
+		     categoryProperty="date"
+		     valueProperty="coastWithout"></AreaSeries>
+	  <DateTimeContinuousAxis #coastXAxis
+				  tkCartesianHorizontalAxis
+				  allowZoom="false"
+				  allowPan="false"
+				  plotMode="BetweenTicks"></DateTimeContinuousAxis>
+	  <LinearAxis tkCartesianVerticalAxis
+		      id="coastVAxis"></LinearAxis>
+	  <ChartGridLineAnnotation tkCartesianAnnotations
+				   axisId="coastVAxis"
+				   [hidden]="average.coastWith == 0"
+				   [value]="average.coastWith"
+				   zPosition="AboveSeries"
+				   strokeWidth="1"
+				   strokeColor="#EB916580"></ChartGridLineAnnotation>
+	  <RadLegendView tkCartesianLegend
+			 height="75"
+			 enableSelection="true"
+			 title="Series Type"
+			 position="Top"></RadLegendView>
+        </RadCartesianChart>
+      </CarouselItem>
+      <CarouselItem>
+        <Label text="Driving" class="daily-info-label"></Label>
+        <RadCartesianChart
+	  #drivingChart
+	  (pointSelected)="selectPoint($event)"
+	  (pointDeselected)="unselectPoint($event)"
+	  seriesSelectionMode="Single"
+	  class="dashboard-chart">
+	  <!--
+	  <Trackball tkCartesianTrackball
+		     (trackBallContentRequested)="trackBallContentRequested($event)"
+		     showIntersectionPoints="true"
+		     snapMode="ClosestPoint"></Trackball>
+	  -->
+	  <AreaSeries tkCartesianSeries
+		     #distanceSeries
+		     seriesName="Distance"
+		     selectionMode="DataPoint"
+		     legendTitle="Distance"
+		     legendLabel="Series Type"
+		     [items]="historicalData"
+		     categoryProperty="date"
+		     valueProperty="distance"></AreaSeries>
+	  <AreaSeries tkCartesianSeries
+		     #speedSeries
+		     seriesName="Speed"
+		     selectionMode="DataPoint"
+		     legendTitle="Speed"
+		     legendLabel="Series Type"
+		     [items]="historicalData"
+		     categoryProperty="date"
+		     valueProperty="speed"></AreaSeries>
+	  <DateTimeContinuousAxis #drivingXAxis
+				  tkCartesianHorizontalAxis
+				  allowZoom="false"
+				  allowPan="false"
+				  plotMode="BetweenTicks"></DateTimeContinuousAxis>
+	  <LinearAxis tkCartesianVerticalAxis
+		      id="drivingVAxis"></LinearAxis>
+	  <ChartGridLineAnnotation tkCartesianAnnotations
+				   axisId="drivingVAxis"
+				   [hidden]="average.distance == 0"
+				   [value]="average.distance"
+				   zPosition="AboveSeries"
+				   strokeWidth="1"
+				   strokeColor="#EB916580"></ChartGridLineAnnotation>
+	  <RadLegendView tkCartesianLegend
+			 height="75"
+			 enableSelection="true"
+			 title="Series Type"
+			 position="Top"></RadLegendView>
+        </RadCartesianChart>
+      </CarouselItem>
+      <CarouselItem>
+        <Label text="Data List" class="daily-info-label"></Label>
+	<ListView [items]="historicalData" >
+	  <ng-template let-item="item" let-i="index" let-odd="odd" let-even="even">
+            <DockLayout stretchLastChild="false" [class.odd]="odd" [class.even]="even">
+              <Label verticalAlign="center" dock="left" [text]="item.date"></Label>
+	      <Button class="daily-info-button" dock="right" text="View" (tap)="onDataTap(item)"></Button>
+            </DockLayout>
+	  </ng-template>
+	</ListView>
+      </CarouselItem>
+    </Carousel>
+    <SegmentedBar
+      row="1"
+      selectedIndex="2"
+      [items]="timeSelections"
+      (selectedIndexChange)="onSelectedIndexChange($event)">
+    </SegmentedBar>
+  </GridLayout>
+</RadSideDrawer>

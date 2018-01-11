@@ -4,21 +4,21 @@ import { NativeScriptCommonModule } from "nativescript-angular/common";
 import { NativeScriptFormsModule } from "nativescript-angular/forms";
 
 import { SharedModule } from "../shared/shared.module";
-import { SettingsRoutingModule } from "./settings-routing.module";
-import { SettingsComponent } from "./settings.component";
+import { LoginRoutingModule } from "./login-routing.module";
+import { LoginComponent } from "./login.component";
 
 @NgModule({
     imports: [
         NativeScriptCommonModule,
-        SettingsRoutingModule,
+        LoginRoutingModule,
 	NativeScriptFormsModule,
         SharedModule
     ],
     declarations: [
-        SettingsComponent
+        LoginComponent
     ],
     schemas: [
         NO_ERRORS_SCHEMA
     ]
 })
-export class SettingsModule { }
+export class LoginModule { }

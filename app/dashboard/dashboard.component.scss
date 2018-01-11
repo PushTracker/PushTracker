@@ -1,0 +1,28 @@
+// Custom common variables
+@import '../app-variables';
+
+.odd {
+    background-color: #3c8aba;
+    color: white;
+}
+
+.even {
+    background-color: #e3e4e5;
+}
+
+.daily-info-button {
+    color: black;
+}
+
+.action-item {
+    color: white;
+    font-size: 18;
+    text-transform: none;
+    padding: 0;
+    margin: 0;
+}
+
+.daily-info-label {
+    horizontal-align: center;
+    font-weight: bold;
+}

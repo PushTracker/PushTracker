@@ -8,7 +8,7 @@ import { RouterExtensions } from "nativescript-angular/router";
     selector: "MyDrawerItem",
     moduleId: module.id,
     templateUrl: "./my-drawer-item.component.html",
-    styleUrls: ["./my-drawer-item.component.scss"]
+    styleUrls: ["./my-drawer-item.component.css"]
 })
 export class MyDrawerItemComponent implements OnInit {
     @Input() title: string;
@@ -35,7 +35,8 @@ export class MyDrawerItemComponent implements OnInit {
         this.routerExtensions.navigate([navItemRoute], {
             transition: {
                 name: "fade"
-            }
+            },
+	    clearHistory: true
         });
     }
 }
