@@ -7,11 +7,14 @@ import { DashboardComponent } from "./dashboard.component";
 
 import { NativeScriptUIChartModule } from "nativescript-pro-ui/chart/angular";
 
+import { PagerModule } from "nativescript-pager/angular";
+
 @NgModule({
     imports: [
         NativeScriptCommonModule,
         NativeScriptUIChartModule,
         DashboardRoutingModule,
+	PagerModule,
         SharedModule
     ],
     declarations: [
