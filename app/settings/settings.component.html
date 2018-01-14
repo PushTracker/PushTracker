@@ -38,41 +38,47 @@
   <ScrollView class="page page-content" orientation="vertical" tkMainContent>
     <StackLayout>
       <DockLayout stretchLastChild="false">
-	<Label text="Control Mode" class="settings-item" dock="left"></Label>
-	<SegmentedBar [items]="ControlModes" dock="right" (selectedIndexChanged)="onControlModeChange($event)"></SegmentedBar>
+	      <Label text="Control Mode" class="settings-item" dock="left"></Label>
+	      <SegmentedBar [items]="ControlModes" class="settings-segmentedBar" dock="right" (selectedIndexChanged)="onControlModeChange($event)"></SegmentedBar>
       </DockLayout>
 
       <DockLayout stretchLastChild="false">
-	<Label text="EZ-ON" class="settings-item" dock="left"></Label>
-	<Switch dock="right" [(ngModel)]="settings.ezOn"></Switch>
+	      <Label text="EZ-ON" class="settings-item" dock="left"></Label>
+	      <Switch dock="right" class="settings-segmentedBar" [(ngModel)]="settings.ezOn"></Switch>
       </DockLayout>
 
       <DockLayout stretchLastChild="false">
-	<Label text="Units" class="settings-item" dock="left"></Label>
-	<SegmentedBar [items]="Units" dock="right" [width]="Units.length * 100" (selectedIndexChanged)="onUnitsChange($event)"></SegmentedBar>
+	      <Label text="Units" class="settings-item" dock="left"></Label>
+	      <SegmentedBar [items]="Units" class="settings-segmentedBar" dock="right" [width]="Units.length * 100" (selectedIndexChanged)="onUnitsChange($event)"></SegmentedBar>
       </DockLayout>
 
-      <Label text="Acceleration" class="settings-item" ></Label>
+      <DockLayout stretchLastChild="false">
+          <Label text="Acceleration" class="settings-item" ></Label>
+          <Label verticalAlignment="center" dock="right" class="settings-slider-value-label" style="min-width: 50" [text]="settings.acceleration.toFixed(0)+'%'" row="0" col="1"></Label>
+      </DockLayout>
       <GridLayout rows="auto" columns="*, auto">
-        <Slider verticalAlignment="center" class="settings-slider" [value]="settings.acceleration" (valueChange)="onSliderUpdate('acceleration', $event)" row="0" col="0"></Slider>
-        <Label verticalAlignment="center" class="settings-slider-label" style="min-width: 50" [text]="settings.acceleration.toFixed(0)+'%'" row="0" col="1"></Label>
-      </GridLayout>
-
-      <Label text="Max Speed" class="settings-item" ></Label>
-      <GridLayout rows="auto" columns="*, auto">
-        <Slider verticalAlignment="center" class="settings-slider" [value]="settings.maxSpeed" (valueChange)="onSliderUpdate('maxSpeed', $event)" row="0" col="0"></Slider>
-        <Label verticalAlignment="center" class="settings-slider-label" style="min-width: 50" [text]="settings.maxSpeed.toFixed(0)+'%'" row="0" col="1"></Label>
-      </GridLayout>
-
-      <Label text="Tap Sensitivity" class="settings-item" ></Label>
-      <GridLayout rows="auto" columns="*, auto">
-        <Slider verticalAlignment="center" class="settings-slider" [value]="settings.tapSensitivity" (valueChange)="onSliderUpdate('tapSensitivity', $event)" row="0" col="0"></Slider>
-        <Label verticalAlignment="center" class="settings-slider-label" style="min-width: 50" [text]="settings.tapSensitivity.toFixed(0)+'%'" row="0" col="1"></Label>
+          <Slider verticalAlignment="center" class="settings-slider" [value]="settings.acceleration" (valueChange)="onSliderUpdate('acceleration', $event)" row="0" col="0"></Slider>
       </GridLayout>
 
       <DockLayout stretchLastChild="false">
-	<Label text="LED Color" class="settings-item" dock="left"></Label>
-	<Button [backgroundColor]="settings.ledColor" dock="right" (tap)="onPickColor()"></Button>
+          <Label text="Max Speed" class="settings-item" ></Label>
+          <Label verticalAlignment="center" dock="right" class="settings-slider-value-label" style="min-width: 50" [text]="settings.maxSpeed.toFixed(0)+'%'" row="0" col="1"></Label>
+      </DockLayout>
+      <GridLayout rows="auto" columns="*, auto">
+        <Slider verticalAlignment="center" class="settings-slider" [value]="settings.maxSpeed" (valueChange)="onSliderUpdate('maxSpeed', $event)" row="0" col="0"></Slider>  
+      </GridLayout>
+
+      <DockLayout stretchLastChild="false">
+          <Label text="Tap Sensitivity" class="settings-item" ></Label>
+          <Label verticalAlignment="center" dock="right" class="settings-slider-value-label" style="min-width: 50" [text]="settings.tapSensitivity.toFixed(0)+'%'" row="0" col="1"></Label>
+      </DockLayout>
+      <GridLayout rows="auto" columns="*, auto">
+          <Slider verticalAlignment="center" class="settings-slider" [value]="settings.tapSensitivity" (valueChange)="onSliderUpdate('tapSensitivity', $event)" row="0" col="0"></Slider>
+      </GridLayout>
+
+      <DockLayout stretchLastChild="false" class="colorOption-dock-layoput">
+	      <Label text="LED Color" class="settings-item" dock="left"></Label>
+	      <Button [backgroundColor]="settings.ledColor" class= "colorButton" dock="right" (tap)="onPickColor()"></Button>
       </DockLayout>
 
     </StackLayout>

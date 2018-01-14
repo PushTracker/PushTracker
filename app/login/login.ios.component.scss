@@ -5,10 +5,10 @@
     vertical-align: center;
 }
 .account-icon {
-    color: #0067a6;
+    color: #3c8aba;
     font-size: 100;
     text-align: center;
-    margin: 10, 0, 20, 0;
+    margin: 10, 10, 50, 10;
 }
 GridLayout {
   margin-left: 30;
@@ -22,10 +22,20 @@ Label {
 Button, TextField {
   margin-left: 16;
   margin-right: 16;
-  margin-bottom: 10;
+  margin-bottom: 10;  
 }
 .submit-button {
   background-color: #3c8aba;
   color: white;
+  padding: 10;
   margin-top: 20;
+  border-radius: 2;
+}
+TextField{
+  background-color: rgba(80,135,180,0.1);
+  padding: 10;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #929191;
+  border-radius: 2;
 }

@@ -1,6 +1,16 @@
 // Custom common variables
 @import '../app-variables';
 
+.settings-stack-layout{
+margin: 20, 0, 20, 0;
+}
+
+#DockLayout{
+
+    margin: 30, 0 ,30, 0;
+    padding: 20,10,20,10;
+}
+
 .action-item {
     color: white;
     font-size: 18;
@@ -11,18 +21,33 @@
     vertical-align: center;
     text-overflow: none;
     word-wrap: normal;
-    color: black;
-    font-weight: bold;
-    margin: 15;
+    color: $blue-light;
+    font-weight: 500;
+    margin: 10, 10, 10, 10;
 }
 
 .settings-slider-label {
-    color: black;
-    font-weight: bold;
+    color: $blue-light;
+    font-weight: 500;
+    margin: 10, 10, 10, 20;
+}
+
+.settings-slider-value-label {
+    color: $blue-light;
+    font-weight: 500;
+    margin: 10, 0, 10, 20;
 }
 
 .settings-slider {
-    margin: 5;
+    margin: 0, 10, 0, 10;
+    color: $blue-light;
+    background-color: $blue-light;
+}
+
+.settings-segmentedBar{
+    selected-background-color: $blue-light;
+    margin: 10, 10, 10, 10;
+    color: $blue-light;
 }
 
 .debug-label {
@@ -30,4 +55,18 @@
     border-bottom-color: gray;
     margin: 20;
     font-weight: bold;
+}
+
+.colorButton{
+    width: 250;
+    height: 25;
+    border-style: solid;
+    border-width: 2px;
+    border-color: #b6b6b6;
+    border-radius: 10;
+    margin: 0, 10, 0, 10;
+}
+
+.colorOption-dock-layout{
+    margin: 10, 0, 0, 0;
 }
