@@ -152,8 +152,8 @@ export class DashboardComponent implements OnInit {
     public onSelectedIndexChange(args): void {
         const segmentedBar = <SegmentedBar>args.object;
         this.selectedTime = this.times[segmentedBar.selectedIndex];
-	this.updateData(this.historicalData.slice());
-	//this.updateAxes();
+	//this.updateData(this.historicalData.slice());
+	this.updateAxes();
     }
 
     public trackBallContentRequested(args): void {
