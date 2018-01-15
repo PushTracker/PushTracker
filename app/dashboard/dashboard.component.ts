@@ -33,10 +33,6 @@ export class DashboardComponent implements OnInit {
     @ViewChild("coastXAxis") coastXAxis: ElementRef;
     @ViewChild("drivingXAxis") drivingXAxis: ElementRef;
 
-    @ViewChild("pushesChart") pushesChart: ElementRef;
-    @ViewChild("coastChart") coastChart: ElementRef;
-    @ViewChild("drivingChart") drivingChart: ElementRef;
-
     // public members
     public times: Array<string> = ["Year", "Month", "Week"];
     public timeSelections: Array<SegmentedBarItem>;
@@ -151,36 +147,15 @@ export class DashboardComponent implements OnInit {
     public onSelectedIndexChange(args): void {
         const segmentedBar = <SegmentedBar>args.object;
         this.selectedTime = this.times[segmentedBar.selectedIndex];
-	this.updateAxes();
+	this.updateData(this.historicalData.slice());
+	//this.updateAxes();
     }
 
     public trackBallContentRequested(args): void {
+	/*
 	console.log("trackball content requested!");
 	console.log(Object.keys(args));
-    }
-
-    public selectPoint(args): void {
-	const eventName = args.eventName;
-	const point = args.object;
-	const series = args.series;
-	const pointIndex = args.pointIndex;
-	const pointData = args.pointData;
-	console.log("point selected!");
-	/*
-	console.log(args.object);
-	console.log(pointIndex);
-	console.log(series.items);
-	console.log(Object.keys(series.items));
-	console.log(series.seriesName);
 	*/
-    }
-
-    public unselectPoint(args): void {
-	const eventName = args.eventName;
-	const point = args.object;
-	const series = args.series;
-	const pointIndex = args.pointIndex;
-	const pointData = args.pointData;
     }
 
     private getRandomRange(min: number, max: number): number {
