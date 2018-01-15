@@ -10,10 +10,10 @@
               ios.position="left">
   </ActionItem>
 
-  <ActionItem text="Init"  (tap)="onDashboardInitTap()" ios.position="popup" android.position="popup">
+  <ActionItem text="Init"  (tap)="onDashboardInitTap()" ios:position="popup" android.position="popup">
   </ActionItem>
 
-  <ActionItem text="Clear" (tap)="onDashboardClearTap()" ios.position="popup" android.position="popup">
+  <ActionItem text="Clear" (tap)="onDashboardClearTap()" ios:position="popup" android.position="popup">
   </ActionItem>
 
   <Label class="action-bar-title" text="Dashboard"></Label>
@@ -48,6 +48,7 @@
 	    seriesSelectionMode="Single"
 	    class="dashboard-chart">
 	    <Trackball tkCartesianTrackball
+		       *ngIf="isIOS"
 		       (trackBallContentRequested)="trackBallContentRequested($event)"
 		       showIntersectionPoints="true"
 		       snapMode="ClosestPoint"></Trackball>
@@ -85,6 +86,7 @@
 				     strokeWidth="1"
 				     strokeColor="#EB916580"></ChartGridLineAnnotation>
 	    <RadLegendView tkCartesianLegend
+			   android:height="75"
 			   enableSelection="true"
 			   position="Top"
 			   title="Series Type"></RadLegendView>
@@ -99,6 +101,7 @@
 	    seriesSelectionMode="Single"
 	    class="dashboard-chart">
 	    <Trackball tkCartesianTrackball
+		       *ngIf="isIOS"
 		       (trackBallContentRequested)="trackBallContentRequested($event)"
 		       showIntersectionPoints="true"
 		       snapMode="ClosestPoint"></Trackball>
@@ -133,6 +136,7 @@
 				     strokeWidth="1"
 				     strokeColor="#EB916580"></ChartGridLineAnnotation>
 	    <RadLegendView tkCartesianLegend
+			   android:height="75"
 			   enableSelection="true"
 			   title="Series Type"
 			   position="Top"></RadLegendView>
@@ -147,6 +151,7 @@
 	    seriesSelectionMode="Single"
 	    class="dashboard-chart">
 	    <Trackball tkCartesianTrackball
+		       *ngIf="isIOS"
 		       (trackBallContentRequested)="trackBallContentRequested($event)"
 		       showIntersectionPoints="true"
 		       snapMode="ClosestPoint"></Trackball>
@@ -183,6 +188,7 @@
 				     strokeWidth="1"
 				     strokeColor="#EB916580"></ChartGridLineAnnotation>
 	    <RadLegendView tkCartesianLegend
+			   android:height="75"
 			   enableSelection="true"
 			   title="Series Type"
 			   position="Top"></RadLegendView>

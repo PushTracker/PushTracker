@@ -1,3 +1,5 @@
+import application = require("application");
+
 /// <reference types="@types/datejs" />
 import { Component, ChangeDetectionStrategy, ElementRef, Injectable, OnInit, ViewChild, NgZone } from "@angular/core";
 import { DrawerTransitionBase, SlideInOnTopTransition } from "nativescript-pro-ui/sidedrawer";
@@ -34,6 +36,9 @@ export class DashboardComponent implements OnInit {
     @ViewChild("drivingXAxis") drivingXAxis: ElementRef;
 
     // public members
+    public isIOS: boolean = false;
+    public isAndroid: boolean = false;
+    
     public times: Array<string> = ["Year", "Month", "Week"];
     public timeSelections: Array<SegmentedBarItem>;
     public selectedTime: string = this.times[2];
@@ -229,6 +234,11 @@ export class DashboardComponent implements OnInit {
     *************************************************************/
     ngOnInit(): void {
         this._sideDrawerTransition = new SlideInOnTopTransition();
+	if (application.ios) {
+	    this.isIOS = true;
+	} else if (application.android) {
+	    this.isAndroid = true;
+	}
     }
 
     get sideDrawerTransition(): DrawerTransitionBase {
