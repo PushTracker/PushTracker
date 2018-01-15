@@ -1,3 +1,5 @@
+import application = require("application");
+
 import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { DrawerTransitionBase, SlideInOnTopTransition } from "nativescript-pro-ui/sidedrawer";
 import { RadSideDrawerComponent } from "nativescript-pro-ui/sidedrawer/angular";
@@ -12,6 +14,10 @@ import { SettingsService } from "../shared/settings.service";
 
 import { ColorPicker } from "nativescript-color-picker";
 import { Color } from "color";
+
+import { knownFolders, File } from "file-system";
+
+let currentApp = knownFolders.currentApp();
 
 @Component({
     selector: "Settings",
@@ -28,6 +34,9 @@ export class SettingsComponent implements OnInit {
 
     public ControlModes: Array<SegmentedBarItem> = [];
     public Units: Array<SegmentedBarItem> = [];
+
+    public isIOS: boolean = false;
+    public isAndroid: boolean = false;
     
     // private members
     private _sideDrawerTransition: DrawerTransitionBase;
@@ -44,6 +53,29 @@ export class SettingsComponent implements OnInit {
 	    item.title = o;
 	    this.Units.push(item);
 	});
+    }
+
+    public onOTACheck(): void {
+	confirm({
+	    title: "Check for Firmware Updates?",
+	    message: "Would you like to see if there are newer firmwares for the PushTracker, SmartDrive Microcontroller, and SmartDrive Bluetooth?",
+	    okButtonText: "Yes",
+	    cancelButtonText: "No"
+	})
+	    .then((result) => {
+		if (result) {
+		    return this.performSmartDriveOTA()
+			.then(() => {
+			    this.performSmartDriveBluetoothOTA();
+			})
+			.then(() => {
+			    this.performPushTrackerOTA();
+			});
+		}
+	    })
+	    .catch((err) => {
+		console.log(err);
+	    });
     }
 
     public onControlModeChange(args): void {
@@ -81,6 +113,11 @@ export class SettingsComponent implements OnInit {
     *************************************************************/
     ngOnInit(): void {
         this._sideDrawerTransition = new SlideInOnTopTransition();
+	if (application.ios) {
+	    this.isIOS = true;
+	} else if (application.android) {
+	    this.isAndroid = true;
+	}
     }
 
     get sideDrawerTransition(): DrawerTransitionBase {
@@ -89,6 +126,50 @@ export class SettingsComponent implements OnInit {
 
     get settings(): Observable {
 	return SettingsService.settings;
+    }
+
+    private loadFile(fileName: string): Promise<any> {
+	const f = currentApp.getFile(fileName);
+	return new Promise((resolve, reject) => {
+	    let data = null;
+	    let source = f.readSync((e) => {
+		console.log("couldn't read file:");
+		console.log(e);
+		reject();
+	    });
+	    if (this.isIOS) {
+		let arr = new ArrayBuffer(source.length);
+		source.getBytes(arr);
+		data = new Uint8Array(arr);
+	    } else if (this.isAndroid) {
+		data = new Uint8Array(source);
+	    }
+	    resolve(data);
+	});
+    }
+
+    private performSmartDriveOTA(): Promise<any> {
+	const fname = "/shared/ota/MX2+.14.ota";
+	return this.loadFile(fname)
+	    .then((otaData) => {
+		console.log(`got MX2+ OTA, version: 0x${Number(otaData[0]).toString(16)}`);
+	    });
+    }
+
+    private performSmartDriveBluetoothOTA(): Promise<any> {
+	const fname = "/shared/ota/SmartDriveBluetooth.14.ota";
+	return this.loadFile(fname)
+	    .then((otaData) => {
+		console.log("got SDBT OTA");
+	    });
+    }
+
+    private performPushTrackerOTA(): Promise<any> {
+	const fname = "/shared/ota/PushTracker.14.ota";
+	return this.loadFile(fname)
+	    .then((otaData) => {
+		console.log("got PT OTA");
+	    });
     }
 
     /* ***********************************************************
