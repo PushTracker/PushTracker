@@ -62,7 +62,17 @@ export class SettingsComponent implements OnInit {
 
     public onPickColor() {
 	this.picker.show(this.settings.get("ledColor").hex, "RGB").then((result: string) => {
-	    this.settings.set("ledColor", new Color(result));
+	    if (result !== null && result !== undefined) {
+		let newColor = null;
+		if (result.indexOf(',') > -1) {
+		    let [r,g,b] = result.split(',').map((res) => { return parseInt(res); });
+		    newColor = new Color(255, r, g, b);
+		}
+		else {
+		    newColor = new Color(result);
+		}
+		this.settings.set("ledColor", newColor);
+	    }
 	});
     }
 
