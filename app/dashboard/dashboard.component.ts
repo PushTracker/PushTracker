@@ -115,20 +115,16 @@ export class DashboardComponent implements OnInit {
 	let dateFormat = "MMM d";
 	let majorStep = "Day";
 	let labelFitMode = "None";
-	let minBarSize = 1;
-	let maxBarSize = 10;
 	switch (this.selectedTime) {
 	default:
 	case "Week":
 	    break;
 	case "Month":
-	    minimum = (30).days().ago();
+	    minimum = Date.today().addWeeks(-4);
 	    majorStep = "Week";
-	    labelFitMode = "None";
 	    break;
 	case "Year":
-	    minimum = (11).months().ago();
-	    maximum = (0).months().ago();
+	    minimum = (12).months().ago();
 	    dateFormat = "MMM";
 	    majorStep = "Month";
 	    break;
@@ -139,13 +135,13 @@ export class DashboardComponent implements OnInit {
 	}
 
 	this.updateAverages(minimum, maximum);
-	
+
 	const axesArray = [ this.pushesXAxis, this.coastXAxis, this.drivingXAxis ];
 	axesArray.map((a) => {
 	    if (a !== null && a !== undefined) {
 		const xAxis = <DateTimeContinuousAxis>a.nativeElement;
-		xAxis.minimum = minimum.toString("dd/MM/yyyy");
-		xAxis.maximum = maximum.toString("dd/MM/yyyy");
+		xAxis.minimum = minimum;
+		xAxis.maximum = maximum;
 		xAxis.majorStep = majorStep;
 		xAxis.dateFormat= dateFormat;
 		xAxis.labelFitMode = labelFitMode;
