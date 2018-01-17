@@ -134,6 +134,10 @@ export class DashboardComponent implements OnInit {
 	    break;
 	}
 
+	if (this.isIOS) {
+	    labelFitMode = "Rotate";
+	}
+
 	this.updateAverages(minimum, maximum);
 	
 	const axesArray = [ this.pushesXAxis, this.coastXAxis, this.drivingXAxis ];
