@@ -4,7 +4,6 @@ import application = require("application");
 import { Component, ChangeDetectionStrategy, ElementRef, Injectable, OnInit, ViewChild, NgZone } from "@angular/core";
 import { DrawerTransitionBase, SlideInOnTopTransition } from "nativescript-pro-ui/sidedrawer";
 import { SegmentedBar, SegmentedBarItem } from "ui/segmented-bar";
-import { RadCartesianChart, LinearAxis, DateTimeContinuousAxis, DateTimeCategoricalAxis, BarSeries } from "nativescript-pro-ui/chart";
 
 import { ObservableArray } from "data/observable-array";
 
@@ -31,10 +30,6 @@ export class DashboardComponent implements OnInit {
     *************************************************************/
     @ViewChild("drawer") drawerComponent: RadSideDrawerComponent;
 
-    @ViewChild("pushesXAxis") pushesXAxis: ElementRef;
-    @ViewChild("coastXAxis") coastXAxis: ElementRef;
-    @ViewChild("drivingXAxis") drivingXAxis: ElementRef;
-
     // public members
     public isIOS: boolean = false;
     public isAndroid: boolean = false;
@@ -44,8 +39,86 @@ export class DashboardComponent implements OnInit {
     public selectedTime: string = this.times[2];
 
     public average: DailyInfo = new DailyInfo();
+    public minimum: string;
+    public maximum: string;
+    public dateFormat: string;
+    public majorStep: string;
+    public labelFitMode: string;
 
     public historicalData: ObservableArray<DailyInfo> = new ObservableArray([]);
+
+    public charts = [
+	{
+	"name": "Pushes",
+	"showAverage": true,
+	"averageColor": "",
+	"key": "pushes",
+	"series": [
+	    {
+	    "name": "Pushes With",
+	    "key": "pushesWith",
+	    "stackMode": "Stack",
+	    "color": "",
+	    "showAverage": false,
+	    "averageColor": ""
+	},
+	    {
+	    "name": "Pushes Without",
+	    "key": "pushesWithout",
+	    "stackMode": "Stack",
+	    "color": "",
+	    "showAverage": false,
+	    "averageColor": ""
+	}
+	]
+    },
+	{
+	"name": "Coast",
+	"showAverage": false,
+	"averageColor": "",
+	"series": [
+	    {
+	    "name": "Coast With",
+	    "key": "coastWith",
+	    "stackMode": "None",
+	    "color": "",
+	    "showAverage": true,
+	    "averageColor": ""
+	},
+	    {
+	    "name": "Coast Without",
+	    "key": "coastWithout",
+	    "stackMode": "None",
+	    "color": "",
+	    "showAverage": true,
+	    "averageColor": ""
+	}
+	]
+    },
+	{
+	"name": "Driving",
+	"showAverage": false,
+	"averageColor": "",
+	"series": [
+	    {
+	    "name": "Distance",
+	    "key": "distance",
+	    "stackMode": "None",
+	    "color": "",
+	    "showAverage": true,
+	    "averageColor": ""
+	},
+	    {
+	    "name": "Speed",
+	    "key": "speed",
+	    "stackMode": "None",
+	    "color": "",
+	    "showAverage": true,
+	    "averageColor": ""
+	}
+	]
+    },
+    ]
 
     // private members
     private _sideDrawerTransition: DrawerTransitionBase;
@@ -65,26 +138,34 @@ export class DashboardComponent implements OnInit {
     }
 
     public updateData(newData): void {
-	this._ngZone.run(() => {
-	    if (newData.length) {
-		this.historicalData.splice(0, this.historicalData.length, ...newData)
-	    }
-	    else {
-		this.historicalData.splice(0, this.historicalData.length);
-	    }
-	    this.updateAxes();
+	if (newData.length) {
+	    this.historicalData.splice(0, this.historicalData.length, ...newData)
+	}
+	else {
+	    this.historicalData.splice(0, this.historicalData.length);
+	}
+	this.updateAxes();
+    }
+
+    public getSeriesKeys(): Array<string> {
+	let keys = [];
+	this.charts.map((c) => {
+	    c.series.map((s) => {
+		keys.push(s.key);
+	    });
 	});
+	return keys;
     }
 
     public zeroAverages(): void {
-	const keys = [ "pushesWith", "pushesWithout", "coastWith", "coastWithout", "distance", "speed"];
+	const keys = this.getSeriesKeys();
 	keys.map((k) => {
 	    this.average[k] = 0;
 	});
     }
 
     public updateAverages(min, max): void {
-	const keys = [ "pushesWith", "pushesWithout", "coastWith", "coastWithout", "distance", "speed"];
+	const keys = this.getSeriesKeys();
 	const sums = {};
 	this.zeroAverages();
 	keys.map((k) => {
@@ -136,31 +217,17 @@ export class DashboardComponent implements OnInit {
 
 	this.updateAverages(minimum, maximum);
 
-	const axesArray = [ this.pushesXAxis, this.coastXAxis, this.drivingXAxis ];
-	axesArray.map((a) => {
-	    if (a !== null && a !== undefined) {
-		const xAxis = <DateTimeContinuousAxis>a.nativeElement;
-		xAxis.minimum = minimum;
-		xAxis.maximum = maximum;
-		xAxis.majorStep = majorStep;
-		xAxis.dateFormat= dateFormat;
-		xAxis.labelFitMode = labelFitMode;
-	    }
-	});
+	this.minimum = minimum.toString("dd/MM/yyyy");
+	this.maximum = maximum.toString("dd/MM/yyyy");
+	this.majorStep = majorStep;
+	this.dateFormat= dateFormat;
+	this.labelFitMode = labelFitMode;
     }
 
     public onSelectedIndexChange(args): void {
         const segmentedBar = <SegmentedBar>args.object;
         this.selectedTime = this.times[segmentedBar.selectedIndex];
-	//this.updateData(this.historicalData.slice());
 	this.updateAxes();
-    }
-
-    public trackBallContentRequested(args): void {
-	/*
-	console.log("trackball content requested!");
-	console.log(Object.keys(args));
-	*/
     }
 
     private getRandomRange(min: number, max: number): number {

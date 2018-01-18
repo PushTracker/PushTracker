@@ -39,159 +39,51 @@
     -->
   <GridLayout class="page page-content" rows="*, auto" columns="*" tkMainContent>      
     <Carousel row="0" android:indicatorOffset="0,70" ios:indicatorOffset="0,10" indicatorColor="#66ccff" indicatorColorUnselected="#cceeff">
-      <CarouselItem>
+      <CarouselItem  *ngFor="let chart of charts">
 	<StackLayout>
-          <Label text="Pushes" class="daily-info-label"></Label>
+          <Label [text]="chart.name" class="daily-info-label"></Label>
           <RadCartesianChart
-	    #pushesChart
 	    visible="false"
 	    seriesSelectionMode="Single"
 	    class="dashboard-chart">
 	    <Trackball tkCartesianTrackball
 		       *ngIf="isIOS"
-		       (trackBallContentRequested)="trackBallContentRequested($event)"
 		       showIntersectionPoints="true"
 		       snapMode="ClosestPoint"></Trackball>
-	    <AreaSeries #pushesWithSeries
-			seriesName="Pushes With"
-			selectionMode="DataPoint"
-			legendTitle="Pushes With"
-			legendLabel="Series Type"
-			stackMode="stack"
-			tkCartesianSeries [items]="historicalData"
+	    <AreaSeries tkCartesianSeries 
+			*ngFor="let s of chart.series"
+			[seriesName]="s.name"
+			[legendTitle]="s.name"
+			[valueProperty]="s.key"
+			[stackMode]="s.stackMode"
+			[items]="historicalData"
 			categoryProperty="date"
-			valueProperty="pushesWith"></AreaSeries>
-	    <AreaSeries #pushesWithoutSeries
-			seriesName="Pushes Without"
 			selectionMode="DataPoint"
-			legendTitle="Pushes Without"
-			legendLabel="Series Type"
-			stackMode="stack"
-			tkCartesianSeries [items]="historicalData"
-			categoryProperty="date"
-			valueProperty="pushesWithout"></AreaSeries>
-	    <DateTimeContinuousAxis #pushesXAxis
-				    tkCartesianHorizontalAxis
+			legendLabel="Series Type"></AreaSeries>
+	    <DateTimeContinuousAxis tkCartesianHorizontalAxis
+				    [minimum]="minimum"
+				    [maximum]="maximum"
+				    [dateFormat]="dateFormat"
+				    [majorStep]="majorStep"
+				    [labelFitMode]="labelFitMode"
 				    allowZoom="false"
 				    allowPan="false"
 				    plotMode="BetweenTicks"></DateTimeContinuousAxis>
 	    <LinearAxis tkCartesianVerticalAxis
-			id="pushesVAxis"
-			android:labelFormat="%.0f"></LinearAxis>
+			id="VAxis"></LinearAxis>
 	    <ChartGridLineAnnotation tkCartesianAnnotations
-				     axisId="pushesVAxis"
-				     [hidden]="average.pushesWith == 0"
-				     [value]="average.pushesWith"
+				     *ngFor="let s of chart.series"
+				     [hidden]="average[s.key] == 0"
+				     [value]="average[s.key]"
+				     axisId="VAxis"
 				     zPosition="AboveSeries"
-				     strokeWidth="1"
+				     strokeWidth="2"
 				     strokeColor="#EB916580"></ChartGridLineAnnotation>
 	    <RadLegendView tkCartesianLegend
 			   android:height="75"
 			   enableSelection="true"
 			   position="Top"
 			   title="Series Type"></RadLegendView>
-          </RadCartesianChart>
-	</StackLayout>
-      </CarouselItem>
-      <CarouselItem>
-	<StackLayout>
-          <Label text="Coast" class="daily-info-label"></Label>
-          <RadCartesianChart
-	    #coastChart
-	    seriesSelectionMode="Single"
-	    class="dashboard-chart">
-	    <Trackball tkCartesianTrackball
-		       *ngIf="isIOS"
-		       (trackBallContentRequested)="trackBallContentRequested($event)"
-		       showIntersectionPoints="true"
-		       snapMode="ClosestPoint"></Trackball>
-	    <AreaSeries #coastWithSeries
-			seriesName="Coast With"
-			selectionMode="DataPoint"
-			legendTitle="Coast With"
-			legendLabel="Series Type"
-			tkCartesianSeries [items]="historicalData"
-			categoryProperty="date"
-			valueProperty="coastWith"></AreaSeries>
-	    <AreaSeries #coastWithoutSeries
-			seriesName="Coast Without"
-			selectionMode="DataPoint"
-			legendTitle="Coast Without"
-			legendLabel="Series Type"
-			tkCartesianSeries [items]="historicalData"
-			categoryProperty="date"
-			valueProperty="coastWithout"></AreaSeries>
-	    <DateTimeContinuousAxis #coastXAxis
-				    tkCartesianHorizontalAxis
-				    allowZoom="false"
-				    allowPan="false"
-				    plotMode="BetweenTicks"></DateTimeContinuousAxis>
-	    <LinearAxis tkCartesianVerticalAxis
-			id="coastVAxis"></LinearAxis>
-	    <ChartGridLineAnnotation tkCartesianAnnotations
-				     axisId="coastVAxis"
-				     [hidden]="average.coastWith == 0"
-				     [value]="average.coastWith"
-				     zPosition="AboveSeries"
-				     strokeWidth="1"
-				     strokeColor="#EB916580"></ChartGridLineAnnotation>
-	    <RadLegendView tkCartesianLegend
-			   android:height="75"
-			   enableSelection="true"
-			   title="Series Type"
-			   position="Top"></RadLegendView>
-          </RadCartesianChart>
-	</StackLayout>
-      </CarouselItem>
-      <CarouselItem>
-	<StackLayout>
-          <Label text="Driving" class="daily-info-label"></Label>
-          <RadCartesianChart
-	    #drivingChart
-	    seriesSelectionMode="Single"
-	    class="dashboard-chart">
-	    <Trackball tkCartesianTrackball
-		       *ngIf="isIOS"
-		       (trackBallContentRequested)="trackBallContentRequested($event)"
-		       showIntersectionPoints="true"
-		       snapMode="ClosestPoint"></Trackball>
-	    <AreaSeries tkCartesianSeries
-			#distanceSeries
-			seriesName="Distance"
-			selectionMode="DataPoint"
-			legendTitle="Distance"
-			legendLabel="Series Type"
-			[items]="historicalData"
-			categoryProperty="date"
-			valueProperty="distance"></AreaSeries>
-	    <AreaSeries tkCartesianSeries
-			#speedSeries
-			seriesName="Speed"
-			selectionMode="DataPoint"
-			legendTitle="Speed"
-			legendLabel="Series Type"
-			[items]="historicalData"
-			categoryProperty="date"
-			valueProperty="speed"></AreaSeries>
-	    <DateTimeContinuousAxis #drivingXAxis
-				    tkCartesianHorizontalAxis
-				    allowZoom="false"
-				    allowPan="false"
-				    plotMode="BetweenTicks"></DateTimeContinuousAxis>
-	    <LinearAxis tkCartesianVerticalAxis
-			id="drivingVAxis"></LinearAxis>
-	    <ChartGridLineAnnotation tkCartesianAnnotations
-				     axisId="drivingVAxis"
-				     [hidden]="average.distance == 0"
-				     [value]="average.distance"
-				     zPosition="AboveSeries"
-				     strokeWidth="1"
-				     strokeColor="#EB916580"></ChartGridLineAnnotation>
-	    <RadLegendView tkCartesianLegend
-			   android:height="75"
-			   enableSelection="true"
-			   title="Series Type"
-			   position="Top"></RadLegendView>
           </RadCartesianChart>
 	</StackLayout>
       </CarouselItem>
