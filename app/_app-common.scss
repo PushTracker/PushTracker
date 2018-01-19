@@ -4,6 +4,16 @@
 .fa {
     font-family: "FontAwesome";
  }
+
+ //Branding
+ .logo{
+    margin: 50, 50, 10, 50;
+    }
+    .pushTracker{
+      font: italic bold 20px Helvetica, serif;
+      color: lightgray;
+      margin: 0, 50, 20, 50;
+    }
  // Common page class
  .page-content {
      .page-placeholder {
@@ -14,8 +24,8 @@
      }
  
      .page-icon {
-         font-size: 72;
-         vertical-align: top;
+         font-size: 50;
+        //  vertical-align: top;
          horizontal-align: center;
          color: $page-icon-color;
          margin-top: 20%;
