@@ -1,10 +1,12 @@
 import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
-
+import { isAndroid, isIOS, device, screen } from "platform";
 import { RouterExtensions } from "nativescript-angular/router";
 import { Page } from "ui/page";
 import { Color } from "color";
+import { Image } from "ui/image";
 import { View } from "ui/core/view";
 import { Animation, AnimationDefinition } from "ui/animation";
+import { PerformanceMonitor } from "nativescript-performance-monitor";
 
 //import { setHintColor } from "../../utils/hint-util";
 import { TextField } from "ui/text-field";

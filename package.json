@@ -35,6 +35,7 @@
     "nativescript-feedback": "^1.1.0",
     "nativescript-localstorage": "^1.1.5",
     "nativescript-pager": "^7.0.4",
+    "nativescript-performance-monitor": "^1.0.0",
     "nativescript-pro-ui": "~3.3.0",
     "nativescript-snackbar": "^2.0.0",
     "nativescript-theme-core": "~1.0.4",

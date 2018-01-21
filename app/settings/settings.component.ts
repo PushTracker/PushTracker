@@ -17,6 +17,8 @@ import { Color } from "color";
 
 import { knownFolders, File } from "file-system";
 
+import { PerformanceMonitor } from "nativescript-performance-monitor";
+
 let currentApp = knownFolders.currentApp();
 
 @Component({
@@ -43,6 +45,9 @@ export class SettingsComponent implements OnInit {
     private picker: ColorPicker = new ColorPicker();
 
     constructor() {
+		new PerformanceMonitor().start({
+			// options
+		  });
 	ControlMode.Options.map((o) => {
 	    const item = new SegmentedBarItem();
 	    item.title = o;
@@ -181,11 +186,11 @@ export class SettingsComponent implements OnInit {
     }
 
     onSaveSettingsTap(): void {
-	confirm({
+		confirm({
             title: "Save Settings?",
             message: "Send these settings to the PushTracker?",
             okButtonText: "Yes",
             cancelButtonText: "No"
-	});
+		});
     }
 }

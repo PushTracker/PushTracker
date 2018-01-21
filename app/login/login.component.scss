@@ -1,24 +1,8 @@
 // Custom common variables
 @import '../app-variables';
 
-.page-content {
-    vertical-align: center;
-}
-
-.account-icon {
-  color: #3c8aba;
-  font-size: 60;
-  text-align: center;
-  margin: 50, 10, 10, 10;
-}
 GridLayout {
-  margin-left: 30;
-  margin-right: 30;
-  background-color: white;
-}
-Label {
-  margin-top: 5;
-  margin-bottom: 20;
+  margin: 40, 30, 0, 30;
 }
 Button, TextField {
   margin-left: 16;
@@ -26,7 +10,7 @@ Button, TextField {
   margin-bottom: 10;
 }
 .submit-button {
-  background-color: #3c8aba;
+  background-color: $blue-light;
   color: white;
   margin-top: 20;
 }
