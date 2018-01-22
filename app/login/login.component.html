@@ -1,6 +1,5 @@
-<ScrollView>
+<ScrollView tkMainContent>
   <GridLayout 
-    tkMainContent
     rows="auto, auto, auto, auto, auto, auto, auto, auto, auto"
     columns="*, *"
     class="page page-content"
@@ -14,24 +13,21 @@
     <Label 
       row="1"
       colSpan="2"
-      class="pushTracker"
-      text="PushTracker">
-    </Label>
-    <Label
-      row="2"
-      colSpan="2"
-      text="________"
-      class="pushTrackerUnderscore">
+      class="pushTracker">
+      <FormattedString>
+	<Span text="Push" textDecoration="underline"></Span>
+	<Span text="Tracker"></Span>
+      </FormattedString>
     </Label>
     <Label 
-      row="3"
+      row="2"
       colSpan="2"
       class="account-icon fa"
       text="&#xf2be;">
     </Label>
     <TextField #email
 	       [(ngModel)]="user.email"
-	       row="4"
+	       row="3"
 	       colSpan="2"
 	       class="selectedTextField"
 	       hint="Email Address"
@@ -41,26 +37,26 @@
     </TextField>
     <TextField #password
 	       [(ngModel)]="user.password"
-	       row="5"
+	       row="4"
 	       colSpan="2"
 	       hint="Password"
 	       secure="true">
     </TextField>
     <Button 
-      row="6"
+      row="5"
       colSpan="2"
       [text]="isLoggingIn ? 'Sign in' : 'Sign up'"
       class="submit-button"
       (tap)="submit()">
     </Button>
     <Button 
-      row="7"
+      row="6"
       colSpan="2"
       [text]="isLoggingIn ? 'Sign up' : 'Back to login'"
       (tap)="toggleDisplay()">
     </Button>
     <Button 
-      row="8"
+      row="7"
       colSpan="2"
       text="Cancel"
       (tap)="cancel()">
