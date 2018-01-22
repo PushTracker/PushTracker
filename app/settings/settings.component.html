@@ -39,7 +39,7 @@
     <StackLayout>
       <DockLayout stretchLastChild="false">
 	      <Label text="Control Mode" class="settings-item" dock="left"></Label>
-	      <SegmentedBar [items]="ControlModes" class="settings-segmentedBar" dock="right" (selectedIndexChanged)="onControlModeChange($event)"></SegmentedBar>
+	      <SegmentedBar [items]="ControlModes" [selectedIndex]="getControlModeIndex()" class="settings-segmentedBar" dock="right" (selectedIndexChanged)="onControlModeChange($event)"></SegmentedBar>
       </DockLayout>
 
       <DockLayout stretchLastChild="false">
@@ -49,7 +49,7 @@
 
       <DockLayout stretchLastChild="false">
 	      <Label text="Units" class="settings-item" dock="left"></Label>
-	      <SegmentedBar [items]="Units" class="settings-segmentedBar" dock="right" [width]="Units.length * 100" (selectedIndexChanged)="onUnitsChange($event)"></SegmentedBar>
+	      <SegmentedBar [items]="Units" [selectedIndex]="getUnitsIndex()" class="settings-segmentedBar" dock="right" [width]="Units.length * 100" (selectedIndexChanged)="onUnitsChange($event)"></SegmentedBar>
       </DockLayout>
 
       <DockLayout stretchLastChild="false">

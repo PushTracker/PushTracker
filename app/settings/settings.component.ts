@@ -88,9 +88,17 @@ export class SettingsComponent implements OnInit {
 	this.settings.set("controlMode", ControlMode.Options[segmentedBar.selectedIndex]);
     }
 
+    public getControlModeIndex(): number {
+	return ControlMode.Options.indexOf(this.settings.get("controlMode"));
+    }
+
     public onUnitsChange(args): void {
 	let segmentedBar = <SegmentedBar>args.object;
 	this.settings.set("units", Units.Options[segmentedBar.selectedIndex]);
+    }
+
+    public getUnitsIndex(): number {
+	return Units.Options.indexOf(this.settings.get("units"));
     }
 
     public onSliderUpdate(key, args) {
