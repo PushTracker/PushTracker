@@ -2,8 +2,9 @@
 @import '../app-variables';
 
 GridLayout {
-  margin: 40, 30, 0, 30;
+    margin: 40, 30, 0, 30;
 }
+
 Button, TextField {
   margin-left: 16;
   margin-right: 16;
