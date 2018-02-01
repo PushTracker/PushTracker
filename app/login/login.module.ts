@@ -11,7 +11,7 @@ import { LoginComponent } from "./login.component";
     imports: [
         NativeScriptCommonModule,
         LoginRoutingModule,
-	NativeScriptFormsModule,
+	    NativeScriptFormsModule,
         SharedModule
     ],
     declarations: [

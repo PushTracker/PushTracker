@@ -5,6 +5,8 @@ import { NativeScriptUISideDrawerModule } from "nativescript-pro-ui/sidedrawer/a
 import { MyDrawerItemComponent } from "./my-drawer-item/my-drawer-item.component";
 import { MyDrawerComponent } from "./my-drawer/my-drawer.component";
 
+import { TranslateModule } from '@ngx-translate/core';
+
 @NgModule({
     imports: [
         NativeScriptCommonModule,
@@ -16,7 +18,8 @@ import { MyDrawerComponent } from "./my-drawer/my-drawer.component";
     ],
     exports: [
         MyDrawerComponent,
-        NativeScriptUISideDrawerModule
+        NativeScriptUISideDrawerModule,
+        TranslateModule
     ],
     schemas: [
         NO_ERRORS_SCHEMA

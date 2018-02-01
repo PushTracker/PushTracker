@@ -14,6 +14,10 @@ import { TextField } from "ui/text-field";
 import { User } from "../shared/user";
 import { LoginService } from "../shared/login.service";
 
+import { TranslateService } from "@ngx-translate/core";
+
+import { Location } from "@angular/common";
+
 @Component({
     selector: "Login",
     moduleId: module.id,
@@ -34,7 +38,7 @@ export class LoginComponent implements OnInit {
     // private members
 
     // functions
-    constructor(private routerExtensions: RouterExtensions, private loginService: LoginService, private page: Page) {
+    constructor(private routerExtensions: RouterExtensions, private loginService: LoginService, private page: Page, private location: Location, private translate: TranslateService) {
 	this.user = new User();
     }
 

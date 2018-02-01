@@ -1,0 +1,9 @@
+{
+    "LOGIN": {
+    "EMAIL": "E-mailadres",
+    "PASSWORD": "Wachtwoord",
+    "SIGNIN": "Aanmelden",
+    "SIGNUP": "Aanmelden",
+    "CANCEL": "Ondertekenen"
+    }
+}
